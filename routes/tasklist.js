@@ -21,7 +21,7 @@ const TaskDao = require("../models/TaskDao");
 
      const items = await this.taskDao.find(querySpec);
      res.render("index", {
-       title: "My ToDo List ",
+       title: "Rendelések ",
        tasks: items
      });
    }
