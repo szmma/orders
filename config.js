@@ -12,5 +12,19 @@ if (config.host.includes("https://localhost:")) {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   console.log(`Go to http://localhost:${process.env.PORT || '3000'} to try the sample.`);
 }
+//
+it("nativeApi Client Should successfully execute request", function (done) {
+            var connectionPolicy = new DocumentBase.ConnectionPolicy();
+            // Disable SSL verification explicitly
+            connectionPolicy.DisableSSLVerification = true;
+            var client = new DocumentDBClient(host, { masterKey: masterKey },
+                connectionPolicy);
 
+            // create database
+            client.createDatabase({ id: Base.generateGuidId() }, function (err, db) {
+                assert.equal(err, undefined, "error creating database");
+                done();
+            });
+        });
+//
 module.exports = config;
