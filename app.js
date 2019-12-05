@@ -44,7 +44,8 @@ const CosmosClient = require('@azure/cosmos').CosmosClient
      process.exit(1)
    })
 
- app.get('/get', (req, res, next) => taskList.showTasks(req, res).catch(next))
+ app.get('/load', (req, res, next) => taskList.showTasks(req, res).catch(next))
+ app.get('/', (req, res, next) => taskList.showTasks(req, res).catch(next))
  app.post('/addtask', (req, res, next) => taskList.addTask(req, res).catch(next))
  app.post('/completetask', (req, res, next) =>
    taskList.completeTask(req, res).catch(next)
