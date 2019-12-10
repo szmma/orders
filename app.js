@@ -30,6 +30,23 @@ const CosmosClient = require('@azure/cosmos').CosmosClient
    endpoint: config.host,
    key: config.authKey
  })
+ //-----------------
+
+ const taskDao2 = new TaskDao(cosmosClient, config.databaseId, config.containerId2)
+ const taskList2 = new TaskList(taskDao2)
+  taskDao2
+   .init(err => {
+     console.error(err)
+   })
+   .catch(err => {
+     console.error(err)
+     console.error(
+       'Shutting down because there was an error settinig up the database.'
+     )
+     process.exit(1)
+   })
+
+ //-----------------
  const taskDao = new TaskDao(cosmosClient, config.databaseId, config.containerId)
  const taskList = new TaskList(taskDao)
  taskDao
@@ -43,8 +60,7 @@ const CosmosClient = require('@azure/cosmos').CosmosClient
      )
      process.exit(1)
    })
-
- app.get('/load', (req, res, next) => taskList.showTasks(req, res).catch(next))
+ app.get('/menu', (req, res, next) => taskList2.showTasks2(req, res).catch(next))
  app.get('/', (req, res, next) => taskList.showTasks(req, res).catch(next))
  app.post('/addtask', (req, res, next) => taskList.addTask(req, res).catch(next))
  app.post('/completetask', (req, res, next) =>
