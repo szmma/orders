@@ -8,6 +8,16 @@ const TaskDao = require("../models/TaskDao");
    constructor(taskDao) {
      this.taskDao = taskDao;
    }
+   //-------
+      async showTasks2(req, res) {
+     const querySpec = {
+       query: "SELECT * FROM root",
+     };
+
+     const items2 = await this.taskDao.find(querySpec);
+     res.json(items2)
+   }
+   //-------
    async showTasks(req, res) {
      const querySpec = {
        query: "SELECT * FROM root r WHERE r.completed=@completed",
@@ -21,7 +31,7 @@ const TaskDao = require("../models/TaskDao");
 
      const items = await this.taskDao.find(querySpec);
      res.render("index", {
-       title: "Rendelések ",
+       title: "Orders list: ",
        tasks: items
      });
    }
